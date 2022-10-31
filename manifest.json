@@ -1,0 +1,20 @@
+{
+    "name": "display & win Promo!!!",
+    "short_name": "Display & Win Promo!!!",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#fff",
+    "theme_color": "#008000",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "192.png",
+        "type": "image/png","sizes": "192x192",
+        "purpose": "maskable"
+      },
+      {
+        "src": "512.png",
+        "type": "image/png","sizes": "512x512"
+      }
+    ]
+  }

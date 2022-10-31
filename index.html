@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSS only -->
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="512.png" />
+<link rel="apple-touch-icon" href="192.png" />
+<meta name="apple-mobile-web-app-status-bar" content="#008000" />
+<meta name="theme-color" content="#008000" />
+<meta
+  http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://unpkg.com/ityped@1.0.3"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script> -->
+    <title>Document</title>
+    <script type="text/javascript">
+        //Bucket Configurations
+        var bucketName = 'dufil-test-upload';
+        var bucketRegion = 'us-east-1';
+        var IdentityPoolId = 'us-east-1:3045a02d-c91f-45af-8cf2-7ec55c778731';
+        
+         AWS.config.update({
+                        region: bucketRegion,
+                        credentials: new AWS.CognitoIdentityCredentials({
+                            IdentityPoolId: IdentityPoolId
+                        })
+                    });
+        
+                    var s3 = new AWS.S3({
+                        apiVersion: '2006-03-01',
+                        params: {Bucket: bucketName}
+                });
+        </script>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alkalami&family=Passions+Conflict&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Urbanist:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,500&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .slider-img{
+            height:30vh;
+            object-fit:cover;
+        }
+        #imgUpload{
+            display: none;
+        }
+
+        .Imgcontainer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+        }
+     .wrapper{
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0px opx 3px 0px rgba(0,0,0,0.2);
+        border: 1px solid green;
+        height: 100vh;
+     
+     }
+     .btn-container{
+        text-align: 
+        center;position: 
+        absolute;bottom: 50px;
+        display:none
+     }
+    .flex-body{
+        height: 50vh;
+    }
+     .login-page{
+        height: 98%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+     }
+     .appInstallcontainer{
+        z-index: 100000;
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        height: 70%;
+        width: 80%;
+        background-color: white;
+        border-radius: 20px;
+        border: 1px solid green ;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+     }
+     #installBtn{
+        padding: 5px 10px;
+        background-color: #008000;
+        color: white;
+        border-radius: 7px;
+        border: none;
+     }
+    .upload-page{
+    height: 98%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    }
+    .informInput{
+    margin: 30px 0;
+    text-align: center;
+    padding: 0px 20px;
+    }
+    input[type='text']{
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-bottom: 1px solid green;
+    text-align: center;
+    font-size: 18px;
+    background-color: transparent;
+    }
+     input[type='text']::placeholder{
+        font-size: 12px;
+        color:yellowgreen
+     }
+     input[type='text']:focus{
+  outline: none;
+     }
+     #loginBtn{
+        width: 100%;
+        height: 45px;
+        background-color: #008000;
+        border: none;
+        border-radius: 7px;
+        color: white;
+        font-weight: 900;
+     }
+     .flex-footer{
+        height: 20vh;
+    font-family: 'Alkalami';
+    font-size: 18px;
+ color: white;
+ background-image: linear-gradient(
+  270deg,
+  hsl(101deg 100% 20%) 0%,
+  hsl(108deg 76% 27%) 14%,
+  hsl(115deg 63% 34%) 29%,
+  hsl(121deg 57% 41%) 43%,
+  hsl(128deg 60% 45%) 57%,
+  hsl(134deg 66% 49%) 71%,
+  hsl(140deg 81% 52%) 86%,
+  hsl(148deg 100% 50%) 100%
+);
+ position: relative;
+     }
+     .imgUploadContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      position: absolute;
+      top: 50%;
+      left: 40%;
+     }
+     .custom-shape-divider-top-1664898780 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+#imgTaken{
+  width:95%;height: 300px; object-fit:contain
+}
+
+.custom-shape-divider-top-1664898780 svg {
+    position: relative;
+    display: block;
+    width: calc(103% + 1.3px);
+    height: 154px;
+}
+
+.custom-shape-divider-top-1664898780 .shape-fill {
+    fill: #FFFFFF;
+}
+
+/** For mobile devices **/
+@media (max-width: 767px) {
+    .custom-shape-divider-top-1664898780 svg {
+        width: calc(100% + 1.3px);
+        height: 56px;
+    }
+}
+/** For tablet devices **/
+@media (min-width: 768px) and (max-width: 1023px) {
+    .custom-shape-divider-top-1664905584 svg {
+        width: calc(100% + 1.3px);
+        height: 109px;
+    }
+}
+
+.ityped-cursor {
+    font-size: 2.2rem;
+    opacity: 1;
+    -webkit-animation: blink 0.3s infinite;
+    -moz-animation: blink 0.3s infinite;
+    animation: blink 0.3s infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes blink {
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes blink {
+    100% {
+        opacity: 0;
+    }
+}
+.footer-highlight{
+    text-align: center;margin-top: 70px;
+}
+
+@media screen and  (min-width:769px) {
+    #loginBtn{
+   
+        height: 60px;
+        font-weight: 900;
+        font-size: 24px;
+     }
+     input[type='text']::placeholder{
+        font-size: 18px;
+     }
+     .ityped{
+        font-size: 24px;
+     }
+     .footer-highlight{
+        margin-top: 170px;
+        font-size: 30px;
+     }
+}
+@media screen and (min-width:481px) and (max-width:768px) {
+    #loginBtn{
+   
+        height: 60px;
+        font-weight: 900;
+        font-size: 24px;
+     }
+     input[type='text']::placeholder{
+        font-size: 18px;
+     }
+     .ityped{
+        font-size: 24px;
+     }
+     .footer-highlight{
+        margin-top: 150px;
+        font-size: 30px;
+     }
+}
+
+.loading_container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index:1000 ;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loadimg{
+    width:100px;height: 100px;border-radius: 50%; border: solid 9px green;
+    animation: loading 2s infinite forwards;
+}
+@keyframes loading {
+    0%{border-color: #008000;transform: scale(1);}
+    25%{border-color:lime;transform: scale(1.1);}
+    50%{border-color:yellowgreen;transform: scale(1.3);}
+    75%{border-color:gold;transform: scale(1.1);}
+    100%{border-color:crimson;transform: scale(1);}
+}
+@media screen and  (max-width:359px) {
+
+     .footer-highlight{
+        margin-top: 60px;
+        font-size: 14px;
+     }
+     .flex-footer{
+        height: 20vh;
+    font-family: 'Alkalami';
+}
+.flex-body{
+        height: 50vh;
+    }
+     .imgUploadContainer{
+      top: 30%;
+      left: 40%;
+     }
+     .btn-container{
+        position: absolute;
+       bottom: 50px;
+       display: none;
+     }
+     #imgTaken{
+height: 200px;
+}
+.informInput{
+        margin: 10px 0;
+     }
+     .ityped{
+        font-size: 12px;
+     }
+}
+#login-flash-message{
+    font-size: 14px;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+<div id="map" hidden></div>
+<div class="containe-fluid">
+    <div class="wrapper">
+        <div class="top-banner">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner h-100">
+                  <div class="carousel-item active" data-bs-interval="2000">
+                    <img src="https://001-s3-bucket.s3.amazonaws.com/dufil-test-site/poweroil_new_thematic-xx5s4wvr7egc91gp49ep6o.png" alt="..."  class="d-block w-100 slider-img">
+                  </div>
+                  <div class="carousel-item" data-bs-interval="2000">
+                    <img src="tolaram-the-difference-2.jpg" alt="..."
+                    class="d-block w-100 slider-img">
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="flex-body">
+            <div style="text-align:center;padding:0px; color: crimson;">
+                <span id="ityped" class="ityped"></span>
+            </div>
+            <div>
+                <p id="login-flash-message" style="text-align:center;"></p>
+            </div>
+            <div class="login-page">
+                <div class="informInput">
+                    <form action="">
+                        <input type="text" placeholder="please enter your phone number" id="phone" required pattern="[0-9]{3}[0-9]{8}">
+                </div>
+                <div class="informInput">
+                  <button id="loginBtn" type="submit">LOGIN</button>
+                </div>
+            </form>
+                <div class="appInstallcontainer">
+                    <img src="192.png" style="width:50px;height: 50px;border-radius: 50%;" alt="">
+                    <h3 style="font-size:15px;text-align: center;color: green;margin: 30px 0;">Power Oil Display & Win Promo!!!</h3>
+                    <button id="installBtn">Install App</button>
+                </div>
+                <div class="loading_container" id="login-loading">
+                    <img src="192.png"  class="loadimg" alt="">
+                </div>
+                </div>
+            <div class="upload-page">
+                <p id="img-upload-flash-message"></p>
+                    <div class="Imgcontainer" >
+                        <img src="" id="imgTaken" alt=""/>
+                    </div>
+                    <div class="imgUploadContainer" >
+                        <label for="capture">
+                            <i class="fa-solid fa-camera" style="font-size: 30px;cursor: pointer;color:red;"></i>
+                        </label>
+                        <input type="file" name="uploadImg" id="capture" hidden 
+                        accept="image/*;" capture="camera" required/>
+                            <label for="" style="font-size: 10px; color: red; font-weight: 900;">take picture</label>
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn" style="width:95%; background-color: green;color:white"  onclick="s3upload()">Upload</button>
+                    </div>
+                    <div class="loading_container" id="img-upload">
+                        <img src="192.png"  class="loadimg" alt="">
+                    </div>
+                    
+            </div>
+        </div>
+        <div class="flex-footer">
+            <div class="custom-shape-divider-top-1664898780">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z" class="shape-fill"></path>
+                </svg>
+            </div>
+<p class="footer-highlight">Display & Win Promo!!!</p>
+        </div>
+
+    </div>
+
+</div>
+<!-- JavaScript Bundle with Popper -->
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUbld_FSE0dyNm3JyZHUJMW6IJvjuKysw&callback=initMap&v=weekly"
+defer
+></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script>
+let uploadPayload = {
+  photo_url:"",
+  user_id:"",
+  campaign_id :1,
+  city_photo_taken:"",
+  state_photo_taken:"",
+  country_photo_taken:"",
+  latitude_photo_taken:"",
+  longitude_photo_taken:""
+}
+
+let lat = "";
+let lng ="";
+document.querySelector('.upload-page').style.display = 'none';
+document.querySelector('.Imgcontainer').style.display = 'none';
+document.querySelector('.btn-container').style.display = 'none';
+document.querySelector('#img-upload').style.display = 'none';
+document.querySelector('#login-loading').style.display = 'none';
+
+ function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    console.log("Not supported by browser");
+  }
+}
+function showPosition(position) {
+lat = position.coords.latitude;
+lng = position.coords.longitude;
+}
+    function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+  });
+getLocation();
+const geocoder = new google.maps.Geocoder();
+document.querySelector('#loginBtn').addEventListener('click',(e)=>
+{
+    e.preventDefault();
+    if(document.querySelector('#phone').value !="")
+    {
+        document.querySelector('#login-loading').style.display = 'flex';
+      geocoder.geocode({location:{lat:lat,lng:lng}}).then((response)=>
+        {
+            
+            uploadPayload.latitude_photo_taken= ""+lat;
+            uploadPayload.longitude_photo_taken =""+lng;
+            uploadPayload.city_photo_taken = response.results[0].address_components[3].long_name;
+            uploadPayload.state_photo_taken = response.results[0].address_components[4].long_name;
+            uploadPayload.country_photo_taken = response.results[0].address_components[5].long_name;
+            login();
+        })
+        .catch((evt) => window.alert("Geocoder failed due to: " + evt));
+    }
+    else{
+         document.querySelector('#login-flash-message').innerHTML = 'Please Insert Your Phone Number';
+    }
+    
+  })
+
+}
+async function login()
+{
+    try
+    {
+        const resp = await fetch(`http://107.23.126.52:9091/tolaram/phone/validation?phone=${document.querySelector('#phone').value}`,{
+            'method':'Get',
+        })
+        let userData = await resp.json();
+        console.log(document.querySelector('#phone').value)
+        console.log(userData)
+        if(userData.status ==  "SUCCESS")
+        {
+            uploadPayload.user_id = userData.data.userId;
+            $('#login-flash-message').text( userData.message)
+            $('#login-flash-message').css('color','blue')
+            document.querySelector('.login-page').style.display = 'none';
+            document.querySelector('.upload-page').style.display = 'flex'
+            document.querySelector('#login-loading').style.display = 'none';
+            close_flash_message()
+        }  
+        else
+        {
+            
+            $('#login-flash-message').text(userData.message)
+            $('#login-flash-message').css('color','red')
+            close_flash_message()
+            document.querySelector('#login-loading').style.display = 'none';
+        }
+
+    }
+    catch(e){
+        console.log(e)
+        document.querySelector('#login-loading').style.display = 'none';
+        $('#login-flash-message').text( "Server Error Try Again Later")
+        close_flash_message()
+        
+    }
+  
+}
+
+
+    ityped.init('#ityped', {
+    strings:['Welcome To Power oil','Display & win Promo!!', 'To Win an Airtime Do the following', 'Login in with your Phone Number','Take a Picture Of your','  Power Oil Display And Upload Image'],
+    startDelay: 500,
+    loop: true,
+    typeSpeed:  300,
+    });
+    file = document.querySelector('#capture')
+    file.addEventListener('change',()=>
+    {
+        document.querySelector('#img-upload-flash-message').innerHTML=""
+        document.querySelector('.Imgcontainer').style.display = 'flex'
+        document.querySelector('.btn-container').style.display = 'block';//show display button
+        document.querySelector('#imgTaken').src = window.URL.createObjectURL(file.files[0]);
+    })
+    function s3upload() 
+    {
+        let files = file.files;
+        if (files.length !=0) 
+        {
+            document.querySelector('#img-upload').style.display = 'flex';
+            let file = files[0];
+                    let fileName = file.name;
+                    let filePath = 'dufil-img-uploads/' + fileName;
+                    var fileUrl = 'https://' + bucketRegion + '.amazonaws.com/' +  filePath;
+                    s3.upload({
+                            Key: filePath,
+                            Body: file,
+                            ACL: 'public-read'
+                            }, function(err, data) {
+                            if(err) {
+                            reject('error');
+                            document.querySelector('#img-upload-flash-message').innerHTML="Image Not uploaded,Try Again"
+                            document.querySelector('#img-upload-flash-message').style.color='red'
+                            }
+                          console.log(data)
+                                uploadPayload.photo_url = data.Location;
+                                console.log( uploadPayload)
+                                uploadPics (uploadPayload);
+                            
+                           
+                        })
+        }
+    };
+
+
+    if ("serviceWorker" in navigator) {
+window.addEventListener("load", function()
+{
+    navigator.serviceWorker
+        .register("sw.js")
+        .then(res => console.log("service worker registered"))
+        .catch(err => console.log("service worker not registered", err))
+})
+}
+let appContainer = document.querySelector('.appInstallcontainer');
+appContainer.style.display = 'none';
+//preinstall App
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  appContainer.style.display = 'flex';
+ document.querySelector('#installBtn').addEventListener("click", (e) => {
+    appContainer.style.display = 'none';
+    // /Show the prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the A2HS prompt");
+      } else {
+        console.log("User dismissed the A2HS prompt");
+      }
+      deferredPrompt = null;
+    });
+  });
+});
+async function uploadPics (data)
+{
+    try {
+        const resp = await fetch('http://107.23.126.52:9091/tolaram/campaignDetails',{
+        method:'POST',
+        mode :"no-cors",
+        headers:
+        {  
+           "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    })
+    const jsonRsp = await resp;
+    console.log(jsonRsp)
+        document.querySelector('#img-upload').style.display = 'none';
+        document.querySelector('.Imgcontainer').style.display = 'none'
+        document.querySelector('#img-upload-flash-message').innerHTML="Image uploaded Successfully"
+        document.querySelector('#img-upload-flash-message').style.color='blue'
+  
+    } catch (error) {
+        console.log(error)
+        document.querySelector('#img-upload-flash-message').innerHTML="Image Not uploaded,Try Again";
+        document.querySelector('#img-upload-flash-message').style.color='red'
+        document.querySelector('#img-upload').style.display = 'none';
+        document.querySelector('.Imgcontainer').style.display = 'none'
+    }
+
+}
+function close_flash_message()
+{
+    setTimeout(()=>{
+                $('#login-flash-message').text("")
+            },2000)
+}
+window.initMap = initMap;
+</script>
+</body>
+</html>
